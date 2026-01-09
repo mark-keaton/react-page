@@ -22,6 +22,25 @@ export default defineConfig({
       '@react-page/plugins-spacer',
       '@react-page/plugins-divider',
       '@react-page/plugins-background',
+      'react-lazy-with-preload',
+      'react-dnd',
+      'react-dnd-html5-backend',
+      'dnd-core',
+      '@react-dnd/invariant',
+      '@react-dnd/asap',
+      '@react-dnd/shallowequal',
+      'react-player',
+      '@mui/icons-material',
+      '@mui/icons-material/Subject',
+      '@mui/icons-material/PlayArrow',
+      '@mui/icons-material/AspectRatio',
+      '@mui/icons-material/CropLandscape',
     ],
+    // Force re-bundling - clear .vite cache if issues persist
+    force: true,
+  },
+  ssr: {
+    // Ensure these packages are not externalized in SSR
+    noExternal: ['@react-page/*'],
   },
 });

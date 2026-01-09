@@ -106,7 +106,7 @@ const DEFAULT_CONTENT: Value = {
         {
           id: 'divider-cell-1',
           plugin: {
-            id: '@react-page/plugins-divider',
+            id: 'ory/editor/core/content/divider',
             version: 1,
           },
         },
@@ -180,7 +180,7 @@ const DEFAULT_CONTENT: Value = {
         {
           id: 'spacer-cell-1',
           plugin: {
-            id: '@react-page/plugins-spacer',
+            id: 'ory/editor/core/content/spacer',
             version: 1,
           },
           dataI18n: {
@@ -228,7 +228,7 @@ const DEFAULT_CONTENT: Value = {
           id: 'video-embed-cell',
           size: 6,
           plugin: {
-            id: '@react-page/plugins-video',
+            id: 'ory/editor/core/content/video',
             version: 1,
           },
           dataI18n: {
@@ -245,7 +245,7 @@ const DEFAULT_CONTENT: Value = {
         {
           id: 'spacer-cell-2',
           plugin: {
-            id: '@react-page/plugins-spacer',
+            id: 'ory/editor/core/content/spacer',
             version: 1,
           },
           dataI18n: {
@@ -263,7 +263,7 @@ const DEFAULT_CONTENT: Value = {
           id: 'image-cell',
           size: 6,
           plugin: {
-            id: '@react-page/plugins-image',
+            id: 'ory/editor/core/content/image',
             version: 1,
           },
           dataI18n: {
@@ -311,7 +311,7 @@ const DEFAULT_CONTENT: Value = {
         {
           id: 'divider-cell-2',
           plugin: {
-            id: '@react-page/plugins-divider',
+            id: 'ory/editor/core/content/divider',
             version: 1,
           },
         },
@@ -438,7 +438,7 @@ const DEFAULT_CONTENT: Value = {
         {
           id: 'spacer-cell-3',
           plugin: {
-            id: '@react-page/plugins-spacer',
+            id: 'ory/editor/core/content/spacer',
             version: 1,
           },
           dataI18n: {
