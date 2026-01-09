@@ -29,9 +29,11 @@ type SelectFieldCommonProps = {
   transform?: (value: string) => string;
 };
 
+// Omit 'size' and 'inputRef' from CheckboxProps to avoid type conflicts with SwitchProps/RadioProps
+// (Checkbox allows 'large' size but Switch/Radio do not, and inputRef types differ)
 type CheckboxesProps = FieldProps<
   string | string[],
-  CheckboxProps | SwitchProps,
+  Omit<CheckboxProps, 'size' | 'inputRef'> | Omit<SwitchProps, 'inputRef'>,
   SelectFieldCommonProps & {
     checkboxes: true;
     legend?: string;
@@ -79,12 +81,14 @@ function Select(props: SelectFieldProps) {
 
     const appearance = props.appearance ?? 'checkbox';
     const SelectionControl = appearance === 'checkbox' ? Checkbox : Switch;
-    const filteredProps = omit(filterDOMProps(props), [
+    // Note: 'inputRef' type conflicts between HTMLButtonElement and HTMLInputElement
+const filteredProps = omit(filterDOMProps(props), [
       'checkboxes' as never,
       'disableItem' as never,
       'id',
       'inputRef',
-    ]);
+      'size',
+    ] as const);
 
     const children =
       fieldType !== Array ? (
@@ -121,9 +125,9 @@ function Select(props: SelectFieldProps) {
                   onChange={() =>
                     disabled || readOnly || onChange(xor([item], value))
                   }
-                  ref={inputRef}
+                  ref={inputRef as Ref<HTMLButtonElement>}
                   value={name}
-                  {...filteredProps}
+                  {...(filteredProps as Record<string, unknown>)}
                 />
               }
               disabled={props.disableItem?.(item) || disabled}
