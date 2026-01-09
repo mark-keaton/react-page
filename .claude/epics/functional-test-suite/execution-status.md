@@ -6,13 +6,10 @@ branch: epic/functional-test-suite
 # Execution Status
 
 ## Ready to Start (Unblocked)
-- #3: GitHub Actions CI Workflow (depends: #2 - NOW UNBLOCKED)
-- #4: E2E Core Editor Tests (depends: #2 - NOW UNBLOCKED)
-- #5: E2E Slate Editor Tests (depends: #2 - NOW UNBLOCKED)
-- #6: E2E Plugin Tests (depends: #2 - NOW UNBLOCKED)
+- None
 
 ## Blocked (Waiting on Dependencies)
-- #9: Behavioral Baseline Documentation (depends: #4, #5, #6, #7, #8)
+- None
 
 ## In Progress
 - None
@@ -34,3 +31,44 @@ branch: epic/functional-test-suite
   - useCell, useRow, useEditor, useFocusCell hooks
   - Serialization and schema validation
   - Migration tests
+
+- #3: GitHub Actions CI Workflow (commit 6c02d0ce)
+  - .github/workflows/test.yml created
+  - Jest job with coverage reporting
+  - Playwright job with browser caching
+  - Artifact upload on failure
+
+- #4: E2E Core Editor Tests - 82 tests (commit 527e57c4)
+  - e2e/tests/editor/initialization.spec.ts (15 tests)
+  - e2e/tests/editor/cell-operations.spec.ts (16 tests)
+  - e2e/tests/editor/row-operations.spec.ts (18 tests)
+  - e2e/tests/editor/drag-drop.spec.ts (14 tests)
+  - e2e/tests/editor/resize.spec.ts (19 tests)
+
+- #5: E2E Slate Editor Tests - 37 tests (commit 136c6963)
+  - e2e/tests/slate/text-input.spec.ts (8 tests)
+  - e2e/tests/slate/formatting.spec.ts (12 tests)
+  - e2e/tests/slate/lists.spec.ts (10 tests)
+  - e2e/tests/slate/links.spec.ts (10 tests)
+
+- #6: E2E Plugin Tests - 38 tests (commit 77c5b639)
+  - e2e/tests/plugins/image.spec.ts (4 tests)
+  - e2e/tests/plugins/video.spec.ts (4 tests)
+  - e2e/tests/plugins/html5-video.spec.ts (4 tests)
+  - e2e/tests/plugins/spacer.spec.ts (5 tests)
+  - e2e/tests/plugins/divider.spec.ts (5 tests)
+  - e2e/tests/plugins/background.spec.ts (6 tests)
+  - e2e/tests/plugins/plugin-drawer.spec.ts (10 tests)
+
+- #9: Behavioral Baseline Documentation (commit c40e96b5)
+  - docs/behavioral-baseline.md (773 lines)
+  - Editor Core, Slate Editor, Plugins, State Management
+  - Serialization format, Known quirks, Test coverage summary
+
+## Test Summary
+- Integration tests (Jest): 376 tests
+- E2E tests (Playwright): 165+ tests
+- Total: 541+ test cases
+
+## Epic Complete
+All tasks in the functional-test-suite epic have been completed successfully.
