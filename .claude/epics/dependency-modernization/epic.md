@@ -134,3 +134,19 @@ Task 1 (Babel/TS) → Task 2 (Jest) → Task 3 (Lerna)
 - Each task should be a separate PR for clean rollback capability
 - Run full E2E test suite after each major update
 - Document any API changes in CHANGELOG.md
+
+## Tasks Created
+
+- [ ] 1.md - Babel + TypeScript Upgrade (parallel: false)
+- [ ] 2.md - Jest Upgrade (parallel: false, depends: 1)
+- [ ] 3.md - Lerna Migration (parallel: false, depends: 2)
+- [ ] 4.md - React-DnD Compatibility (parallel: false, depends: 3) **HIGH RISK**
+- [ ] 5.md - Redux + Slate Updates (parallel: false, depends: 4)
+- [ ] 6.md - MUI + Emotion Updates (parallel: false, depends: 5)
+- [ ] 7.md - Node LTS + CI Matrix (parallel: false, depends: 6)
+- [ ] 8.md - Integration Testing (parallel: false, depends: 7)
+
+**Total tasks:** 8
+**Parallel tasks:** 0 (all sequential due to dependency chain)
+**Sequential tasks:** 8
+**Estimated total effort:** 43-57 hours
