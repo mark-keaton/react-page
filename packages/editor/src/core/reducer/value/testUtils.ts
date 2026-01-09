@@ -1,6 +1,6 @@
 import type { Action } from 'redux';
-import { applyMiddleware, combineReducers, createStore } from 'redux';
-import thunk from 'redux-thunk';
+import { applyMiddleware, combineReducers, legacy_createStore as createStore } from 'redux';
+import { thunk } from 'redux-thunk';
 import type { Value } from '../../types/node';
 
 import { value } from './index';

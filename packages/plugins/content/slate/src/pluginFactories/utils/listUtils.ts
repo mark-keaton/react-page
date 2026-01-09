@@ -1,4 +1,4 @@
-import { Editor, Path, Text, Transforms } from 'slate';
+import { Editor, Path, Text, Transforms, Node as SlateNode } from 'slate';
 import { LI, LISTS_TYPE_PREFIX } from '../../plugins/lists/constants';
 
 /*
@@ -102,7 +102,7 @@ const moveToParent = (
     // see https://github.com/ianstormtaylor/slate/issues/3769
     const onlyTextChildren =
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      ((targetNode?.[0] as any).children as Node[])?.every(
+      ((targetNode?.[0] as any).children as SlateNode[])?.every(
         (child) => Text.isText(child) || Editor.isInline(editor, child)
       );
     if (onlyTextChildren) {

@@ -14,6 +14,7 @@ export interface UpdateCellIsDraftAction extends Action {
   isDraft: boolean;
   lang?: string | null;
   type: typeof CELL_UPDATE_IS_DRAFT;
+  [key: string]: unknown;
 }
 
 export const updateCellIsDraft = (
@@ -35,6 +36,7 @@ export interface UpdateCellDataAction extends Action {
   lang: string;
   type: typeof CELL_UPDATE_DATA;
   notUndoable?: boolean;
+  [key: string]: unknown;
 }
 
 export const updateCellData =
@@ -57,6 +59,7 @@ export interface RemoveCellAction extends Action {
   ts: Date;
   ids: string[];
   type: typeof CELL_REMOVE;
+  [key: string]: unknown;
 }
 
 export const removeCells = (ids: string[]): RemoveCellAction => ({
@@ -70,6 +73,7 @@ export interface ResizeCellAction extends Action {
   id: string;
   size: number;
   type: typeof CELL_RESIZE;
+  [key: string]: unknown;
 }
 
 export const resizeCell =
@@ -89,6 +93,7 @@ export interface FocusCellAction extends Action {
   scrollToCell?: boolean;
   type: typeof CELL_FOCUS;
   mode: FocusMode;
+  [key: string]: unknown;
 }
 /**
  * Dispatch to focus a cell.
@@ -109,6 +114,7 @@ export interface BlurCellAction extends Action {
   ts: Date;
   id: string;
   type: typeof CELL_BLUR;
+  [key: string]: unknown;
 }
 /**
  * Dispatch to blur a cell.
@@ -122,6 +128,7 @@ export const blurCell = (id: string): BlurCellAction => ({
 export interface BlurAllCellsAction extends Action {
   ts: Date;
   type: typeof CELL_BLUR_ALL;
+  [key: string]: unknown;
 }
 /**
  * Dispatch to blur all cells. For example when clicking on document body.

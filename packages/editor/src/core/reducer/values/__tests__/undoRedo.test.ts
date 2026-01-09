@@ -1,5 +1,5 @@
-import { createStore, combineReducers, applyMiddleware } from 'redux';
-import thunk from 'redux-thunk';
+import { legacy_createStore as createStore, combineReducers, applyMiddleware } from 'redux';
+import { thunk } from 'redux-thunk';
 import { ActionTypes } from 'redux-undo';
 import { values } from '../index';
 import { value } from '../../value';

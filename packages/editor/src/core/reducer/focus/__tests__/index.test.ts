@@ -1,45 +1,57 @@
-import { combineReducers, createStore } from 'redux';
+import { combineReducers, legacy_createStore as createStore } from 'redux';
+import type { Store } from 'redux';
 import expect from 'unexpected';
 import { blurAllCells, blurCell, focusCell } from '../../../actions/cell/index';
 import type { RootState } from '../../../types/state';
 import type { Focus } from '../index';
 import { focus } from '../index';
-const identity = <T>(arg: T) => arg;
 
-const makeStore = (initialFocus: Focus) => {
-  const reducer = combineReducers<RootState>({
-    reactPage: combineReducers<RootState['reactPage']>({
+interface TestState {
+  reactPage: {
+    focus: Focus;
+    hover: unknown;
+    display: { mode: string; zoom: number };
+    values: { future: unknown[]; past: unknown[]; present: unknown };
+    settings: { lang: string | null };
+  };
+}
+
+const makeStore = (initialFocus: Focus): Store<TestState> => {
+  const reducer = combineReducers({
+    reactPage: combineReducers({
       focus,
-      hover: (s) => s || null,
-      display: (s) => s || null,
-      settings: (s) => s || null,
-      values: (s) => s || null,
-    }),
-  });
-
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  return createStore<RootState, any, any, any>(
-    reducer,
-    {
-      reactPage: {
-        hover: null,
-        focus: initialFocus,
-        display: {
-          mode: 'edit',
-          zoom: 1,
-        },
-        values: {
+      hover: (s: unknown = null) => s,
+      display: (s: { mode: string; zoom: number } = { mode: 'edit', zoom: 1 }) =>
+        s,
+      settings: (s: { lang: string | null } = { lang: null }) => s,
+      values: (
+        s: { future: unknown[]; past: unknown[]; present: unknown } = {
           future: [],
           past: [],
           present: null,
-        },
-        settings: {
-          lang: null,
-        },
+        }
+      ) => s,
+    }),
+  });
+
+  return createStore(reducer, {
+    reactPage: {
+      hover: null,
+      focus: initialFocus,
+      display: {
+        mode: 'edit',
+        zoom: 1,
+      },
+      values: {
+        future: [],
+        past: [],
+        present: null,
+      },
+      settings: {
+        lang: null,
       },
     },
-    identity
-  );
+  }) as Store<TestState>;
 };
 
 describe('editor/reducer/focus', () => {

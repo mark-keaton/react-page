@@ -4,6 +4,7 @@ export const SET_LANG = 'SET_LANG';
 
 export interface SetLangAction extends Action {
   lang: string;
+  [key: string]: unknown;
 }
 
 export const setLang = (lang: string): SetLangAction => ({

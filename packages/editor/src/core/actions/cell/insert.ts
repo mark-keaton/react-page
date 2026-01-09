@@ -46,6 +46,7 @@ export interface InsertAction extends Action {
   options: InsertOptions;
   ids: NewIds;
   type: InsertType;
+  [key: string]: unknown;
 }
 
 export type InsertOptions = {
