@@ -3,6 +3,9 @@
   "author": "ORY GmbH",
   "name": "react-page",
   "license": "MIT",
+  "engines": {
+    "node": ">=20"
+  },
   "workspaces": [
     "packages/editor",
     "packages/plugins/content/*",
