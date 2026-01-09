@@ -11,7 +11,9 @@
     "packages/plugins/content/*",
     "packages/plugins/layout/*",
     "packages/react-admin",
-    "examples"
+    "examples",
+    "examples/nextjs",
+    "examples/vite"
   ],
   "devDependencies": {
     "@babel/cli": "^7.28.3",
