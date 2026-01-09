@@ -1,8 +1,37 @@
 import type { Value } from '../../types';
 import { createId } from '../../utils/createId';
 import { CURRENT_EDITABLE_VERSION } from '../EDITABLE_MIGRATIONS';
-import type { Value_v0 } from '../EDITABLE_MIGRATIONS/from0to1';
 import { migrateValue } from '../migrate';
+
+// Define a loose type for V0 test data that allows legacy 'content' and 'layout' properties
+// in nested cells. The actual Value_v0 type has a type mismatch with nested Row definitions.
+type V0TestData = {
+  id: string;
+  cells: Array<{
+    id: string;
+    content?: {
+      plugin: { name: string; version: string };
+      state?: Record<string, unknown>;
+      stateI18n?: Record<string, Record<string, unknown>>;
+    };
+    layout?: {
+      plugin: { name: string; version: string };
+      state?: Record<string, unknown>;
+      stateI18n?: Record<string, Record<string, unknown>>;
+    };
+    rows?: Array<{
+      id: string;
+      cells: Array<{
+        id: string;
+        content?: {
+          plugin: { name: string; version: string };
+          state?: Record<string, unknown>;
+          stateI18n?: Record<string, Record<string, unknown>>;
+        };
+      }>;
+    }>;
+  }>;
+};
 
 jest.mock('../../utils/createId', () => {
   let index = 1;
@@ -13,7 +42,7 @@ jest.mock('../../utils/createId', () => {
 
 describe('migrateValue', () => {
   it('migrates unversioned state to latest state (1)', () => {
-    const oldEditable: Value_v0 = {
+    const oldEditable: V0TestData = {
       id: 'editableId',
       cells: [
         {
@@ -82,7 +111,7 @@ describe('migrateValue', () => {
   });
 
   it('migrates v0 state with layout plugin', () => {
-    const oldEditable: Value_v0 = {
+    const oldEditable: V0TestData = {
       id: 'layout-editor',
       cells: [
         {
@@ -130,7 +159,7 @@ describe('migrateValue', () => {
   });
 
   it('migrates v0 state with stateI18n', () => {
-    const oldEditable: Value_v0 = {
+    const oldEditable: V0TestData = {
       id: 'i18n-editor',
       cells: [
         {
@@ -161,7 +190,7 @@ describe('migrateValue', () => {
   });
 
   it('preserves id through migration', () => {
-    const oldEditable: Value_v0 = {
+    const oldEditable: V0TestData = {
       id: 'preserve-this-id',
       cells: [],
     };
@@ -175,7 +204,7 @@ describe('migrateValue', () => {
   });
 
   it('migrates empty cells array', () => {
-    const oldEditable: Value_v0 = {
+    const oldEditable: V0TestData = {
       id: 'empty-editor',
       cells: [],
     };
@@ -276,7 +305,7 @@ describe('migrateValue', () => {
   });
 
   it('handles deeply nested cells', () => {
-    const oldEditable: Value_v0 = {
+    const oldEditable: V0TestData = {
       id: 'deep-nested',
       cells: [
         {
@@ -331,7 +360,7 @@ describe('migrateValue', () => {
   });
 
   it('migrates multiple cells in a row', () => {
-    const oldEditable: Value_v0 = {
+    const oldEditable: V0TestData = {
       id: 'multi-cell',
       cells: [
         {
