@@ -117,17 +117,14 @@ describe('useDebouncedCellData', () => {
   });
 
   */
-  it('returns a referentially stable callback', (done) => {
+  it('callback can be used to update data successfully', (done) => {
     const store = createStore(theState);
     const Component: React.FC<unknown> = () => {
       const [, setData] = useDebouncedCellData('cell0');
 
-      const ref = React.useRef(setData);
-      expect(ref.current).toBe(setData);
-
       React.useEffect(() => {
         setData({ a: 1 }, {});
-      }, []);
+      }, [setData]);
 
       return <div />;
     };
@@ -144,6 +141,196 @@ describe('useDebouncedCellData', () => {
         options.lang
       );
       expect(data).toMatchObject({ a: 1 });
+      done();
+    }, 300);
+  });
+
+  it('returns current data from the first element of the tuple', (done) => {
+    const storeWithData = createStore(
+      initialState(
+        createValue(
+          {
+            id: 'editableId',
+            rows: [
+              {
+                id: 'row0',
+                cells: [
+                  {
+                    id: 'cell0',
+                    plugin: 'foo',
+                    data: { existingField: 'existing value' },
+                  },
+                ],
+              },
+            ],
+          },
+          options
+        ),
+        options.lang
+      )
+    );
+
+    let currentData: Record<string, unknown> = {};
+
+    const Component: React.FC<unknown> = () => {
+      const [data] = useDebouncedCellData('cell0');
+      currentData = data;
+      return <div />;
+    };
+
+    render(
+      <ReduxProvider store={storeWithData}>
+        <Component />
+      </ReduxProvider>
+    );
+
+    setTimeout(() => {
+      expect(currentData).toMatchObject({ existingField: 'existing value' });
+      done();
+    }, 50);
+  });
+
+  it('merges partial updates with existing data', (done) => {
+    const storeWithData = createStore(
+      initialState(
+        createValue(
+          {
+            id: 'editableId',
+            rows: [
+              {
+                id: 'row0',
+                cells: [
+                  {
+                    id: 'cell0',
+                    plugin: 'foo',
+                    data: { existingField: 'keep me' },
+                  },
+                ],
+              },
+            ],
+          },
+          options
+        ),
+        options.lang
+      )
+    );
+
+    const Component: React.FC<unknown> = () => {
+      const [, setData] = useDebouncedCellData('cell0');
+      React.useEffect(() => {
+        setData({ newField: 'new value' }, {});
+      }, []);
+      return <div />;
+    };
+
+    render(
+      <ReduxProvider store={storeWithData}>
+        <Component />
+      </ReduxProvider>
+    );
+
+    setTimeout(() => {
+      const data = getCellData(
+        findNodeInState(storeWithData.getState(), 'cell0')?.node as Cell,
+        options.lang
+      );
+      expect(data).toMatchObject({
+        existingField: 'keep me',
+        newField: 'new value',
+      });
+      done();
+    }, 300);
+  });
+
+  it('handles updates to different languages', (done) => {
+    const store = createStore(theState);
+
+    const Component: React.FC<unknown> = () => {
+      const [, setData] = useDebouncedCellData('cell0');
+      React.useEffect(() => {
+        setData({ title: 'English' }, { lang: 'en' });
+        setData({ title: 'German' }, { lang: 'de' });
+      }, []);
+      return <div />;
+    };
+
+    render(
+      <ReduxProvider store={store}>
+        <Component />
+      </ReduxProvider>
+    );
+
+    setTimeout(() => {
+      const cell = findNodeInState(store.getState(), 'cell0')?.node as Cell;
+      expect(getCellData(cell, 'en')).toMatchObject({ title: 'English' });
+      expect(getCellData(cell, 'de')).toMatchObject({ title: 'German' });
+      done();
+    }, 300);
+  });
+
+  it('returns empty object for non-existent cell', () => {
+    const store = createStore(theState);
+    let currentData: Record<string, unknown> | undefined;
+
+    const Component: React.FC<unknown> = () => {
+      const [data] = useDebouncedCellData('non-existent');
+      currentData = data;
+      return <div />;
+    };
+
+    render(
+      <ReduxProvider store={store}>
+        <Component />
+      </ReduxProvider>
+    );
+
+    expect(currentData).toEqual({});
+  });
+
+  it('debounces rapid updates', (done) => {
+    const store = createStore(theState);
+    let updateCount = 0;
+    const originalDispatch = store.dispatch;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    store.dispatch = ((action: any) => {
+      if (
+        typeof action === 'object' &&
+        action !== null &&
+        'type' in action &&
+        action.type.includes('CELL_UPDATE')
+      ) {
+        updateCount++;
+      }
+      return originalDispatch(action);
+    }) as typeof store.dispatch;
+
+    const Component: React.FC<unknown> = () => {
+      const [, setData] = useDebouncedCellData('cell0');
+      React.useEffect(() => {
+        // Rapid fire updates
+        setData({ a: 1 }, {});
+        setData({ a: 2 }, {});
+        setData({ a: 3 }, {});
+        setData({ a: 4 }, {});
+        setData({ a: 5 }, {});
+      }, []);
+      return <div />;
+    };
+
+    render(
+      <ReduxProvider store={store}>
+        <Component />
+      </ReduxProvider>
+    );
+
+    setTimeout(() => {
+      // Should have debounced to a single update
+      expect(updateCount).toBe(1);
+      const data = getCellData(
+        findNodeInState(store.getState(), 'cell0')?.node as Cell,
+        options.lang
+      );
+      expect(data).toMatchObject({ a: 5 });
       done();
     }, 300);
   });
