@@ -8,6 +8,7 @@ export interface UpdateEditableAction extends Action {
   ts: Date;
   value: Value | null;
   ids: NewIds;
+  [key: string]: unknown;
 }
 
 export const updateValue = (value: Value | null): UpdateEditableAction => ({

@@ -13,9 +13,11 @@ import { connectField, filterDOMProps } from 'uniforms';
 
 import wrapField from './wrapField';
 
+// Omit 'size' from CheckboxProps to avoid type conflicts with SwitchProps
+// (Checkbox allows 'large' but Switch does not)
 export type BoolFieldProps = FieldProps<
   boolean,
-  CheckboxProps | SwitchProps,
+  Omit<CheckboxProps, 'size'> | SwitchProps,
   {
     appearance?: 'checkbox' | 'switch';
     fullWidth?: boolean;

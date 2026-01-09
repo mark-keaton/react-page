@@ -19,6 +19,7 @@ export interface CellHoverAction extends Action {
   level: number;
   position: PositionEnum;
   type: typeof CELL_DRAG_HOVER;
+  [key: string]: unknown;
 }
 /**
  * Creates a redux action for when a cell hovers another item.
@@ -156,6 +157,7 @@ export const cellHoverInlineRight = (drag: PartialCell, hover: HoverTarget) =>
 export interface DragCellAction extends Action {
   ts: Date;
   id: string;
+  [key: string]: unknown;
 }
 /**
  * Creates a redux action for when a cell is being dragged.
@@ -177,6 +179,7 @@ export const dragCell = (id: string): DragCellAction => ({
 export interface ClearHoverAction extends Action {
   ts: Date;
   type: typeof CLEAR_CLEAR_HOVER;
+  [key: string]: unknown;
 }
 /**
  * Creates a redux action to clear hover state of all cells.
@@ -190,6 +193,7 @@ export const clearHover = (): ClearHoverAction => ({
 
 export interface CancelCellDragAction extends Action {
   ts: Date;
+  [key: string]: unknown;
 }
 /**
  * Creates a redux action for when cell dragging ends.

@@ -1,6 +1,6 @@
 ---
 name: dependency-modernization
-status: backlog
+status: in-progress
 created: 2026-01-09T18:03:41Z
 progress: 0%
 prd: .claude/prds/dependency-modernization.md
