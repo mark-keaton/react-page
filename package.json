@@ -8,7 +8,8 @@
     "packages/plugins/content/*",
     "packages/plugins/layout/*",
     "packages/react-admin",
-    "examples"
+    "examples",
+    "examples/vite"
   ],
   "devDependencies": {
     "@babel/cli": "7.2.0",
