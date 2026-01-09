@@ -18,6 +18,7 @@
     "@babel/preset-env": "7.2.0",
     "@babel/preset-react": "7.0.0",
     "@babel/preset-typescript": "^7.1.0",
+    "@playwright/test": "^1.57.0",
     "@semantic-release/changelog": "^6.0.1",
     "@semantic-release/exec": "semantic-release/exec",
     "@testing-library/react": "^13.4.0",
@@ -81,6 +82,9 @@
     "dev:examples": "cross-env NODE_ENV=development lerna run dev --stream",
     "test": "cross-env NODE_ENV=test jest --coverage",
     "test:watch": "cross-env NODE_ENV=test jest --watch",
+    "test:e2e": "playwright test",
+    "test:e2e:ui": "playwright test --ui",
+    "test:e2e:headed": "playwright test --headed",
     "postinstall": "npm-run-all bootstrap",
     "watch:ts": "chokidar \"+(packages)/*/src/**/*.(ts|tsx)\" \"+(packages)/plugins/*/src/**/*.(ts|tsx)\" --initial",
     "semantic-release": "semantic-release"
@@ -112,7 +116,8 @@
       "/node_modules/",
       "/lib/",
       "/lib-es/",
-      "/examples/"
+      "/examples/",
+      "/e2e/"
     ],
     "watchPathIgnorePatterns": [
       "/node_modules/",

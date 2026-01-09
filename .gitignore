@@ -13,3 +13,8 @@ dist/
 examples/build
 *.tsbuildinfo
 .DS_store
+
+# Playwright
+e2e/test-results/
+playwright-report/
+playwright/.cache/
