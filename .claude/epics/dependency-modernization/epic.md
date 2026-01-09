@@ -4,7 +4,7 @@ status: backlog
 created: 2026-01-09T18:03:41Z
 progress: 0%
 prd: .claude/prds/dependency-modernization.md
-github: [Will be updated when synced to GitHub]
+github: https://github.com/mark-keaton/react-page/issues/11
 ---
 
 # Epic: dependency-modernization
@@ -137,14 +137,14 @@ Task 1 (Babel/TS) → Task 2 (Jest) → Task 3 (Lerna)
 
 ## Tasks Created
 
-- [ ] 1.md - Babel + TypeScript Upgrade (parallel: false)
-- [ ] 2.md - Jest Upgrade (parallel: false, depends: 1)
-- [ ] 3.md - Lerna Migration (parallel: false, depends: 2)
-- [ ] 4.md - React-DnD Compatibility (parallel: false, depends: 3) **HIGH RISK**
-- [ ] 5.md - Redux + Slate Updates (parallel: false, depends: 4)
-- [ ] 6.md - MUI + Emotion Updates (parallel: false, depends: 5)
-- [ ] 7.md - Node LTS + CI Matrix (parallel: false, depends: 6)
-- [ ] 8.md - Integration Testing (parallel: false, depends: 7)
+- [ ] #12 - Babel + TypeScript Upgrade (parallel: false)
+- [ ] #13 - Jest Upgrade (parallel: false, depends: #12)
+- [ ] #14 - Lerna Migration (parallel: false, depends: #13)
+- [ ] #15 - React-DnD Compatibility (parallel: false, depends: #14) **HIGH RISK**
+- [ ] #16 - Redux + Slate Updates (parallel: false, depends: #15)
+- [ ] #17 - MUI + Emotion Updates (parallel: false, depends: #16)
+- [ ] #18 - Node LTS + CI Matrix (parallel: false, depends: #17)
+- [ ] #19 - Integration Testing (parallel: false, depends: #18)
 
 **Total tasks:** 8
 **Parallel tasks:** 0 (all sequential due to dependency chain)
