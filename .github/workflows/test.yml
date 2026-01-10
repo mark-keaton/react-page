@@ -64,6 +64,7 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: build-artifacts
+          path: packages
 
       - name: Run Jest tests
         run: yarn test
@@ -98,6 +99,7 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: build-artifacts
+          path: packages
 
       - name: Get Playwright version
         id: playwright-version
