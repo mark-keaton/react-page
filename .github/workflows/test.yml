@@ -7,10 +7,10 @@ on:
     branches: [main, master]
 
 jobs:
-  jest:
-    name: Jest Unit & Integration Tests
+  build:
+    name: Build
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 10
 
     steps:
       - name: Checkout repository
@@ -19,7 +19,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '18'
+          node-version: '22'
           cache: 'yarn'
 
       - name: Install dependencies
@@ -31,19 +31,56 @@ jobs:
       - name: Build library packages
         run: yarn build:lib
 
-      - name: Run Jest tests with coverage
-        run: yarn test --coverage
-
-      - name: Upload coverage to Coveralls
-        uses: coverallsapp/github-action@v2
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v4
         with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-        continue-on-error: true
+          name: build-artifacts
+          path: |
+            packages/*/lib/
+            packages/plugins/*/lib/
+            packages/plugins/*/*/lib/
+          retention-days: 1
+
+  jest:
+    name: Jest Tests
+    runs-on: ubuntu-latest
+    needs: build
+    timeout-minutes: 10
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'yarn'
+
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile
+
+      - name: Bootstrap monorepo
+        run: yarn bootstrap
+
+      - name: Download build artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: build-artifacts
+          path: packages
+
+      - name: Run Jest tests
+        run: yarn test
 
   playwright:
-    name: Playwright E2E Tests
+    name: Playwright E2E (${{ matrix.shard }}/${{ strategy.job-total }})
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    needs: build
+    timeout-minutes: 10
+    strategy:
+      fail-fast: false
+      matrix:
+        shard: [1, 2, 3, 4]
 
     steps:
       - name: Checkout repository
@@ -52,7 +89,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '18'
+          node-version: '22'
           cache: 'yarn'
 
       - name: Install dependencies
@@ -61,8 +98,11 @@ jobs:
       - name: Bootstrap monorepo
         run: yarn bootstrap
 
-      - name: Build library packages
-        run: yarn build:lib
+      - name: Download build artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: build-artifacts
+          path: packages
 
       - name: Get Playwright version
         id: playwright-version
@@ -83,15 +123,15 @@ jobs:
         if: steps.playwright-cache.outputs.cache-hit == 'true'
         run: npx playwright install-deps chromium
 
-      - name: Run Playwright tests
-        run: yarn test:e2e
+      - name: Run Playwright tests (shard ${{ matrix.shard }}/4)
+        run: yarn test:e2e --shard=${{ matrix.shard }}/4
 
       - name: Upload Playwright report on failure
         uses: actions/upload-artifact@v4
         if: failure()
         with:
-          name: playwright-report
+          name: playwright-report-shard-${{ matrix.shard }}
           path: |
             e2e/test-results/
-            e2e/test-results/html-report/
+            e2e/html-report/
           retention-days: 7
