@@ -35,9 +35,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: build-artifacts
-          path: |
-            packages/*/lib/
-            node_modules/
+          path: packages/*/lib/
           retention-days: 1
 
   jest:
@@ -58,6 +56,9 @@ jobs:
 
       - name: Install dependencies
         run: yarn install --frozen-lockfile
+
+      - name: Bootstrap monorepo
+        run: yarn bootstrap
 
       - name: Download build artifacts
         uses: actions/download-artifact@v4
@@ -89,6 +90,9 @@ jobs:
 
       - name: Install dependencies
         run: yarn install --frozen-lockfile
+
+      - name: Bootstrap monorepo
+        run: yarn bootstrap
 
       - name: Download build artifacts
         uses: actions/download-artifact@v4
