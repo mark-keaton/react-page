@@ -64,11 +64,7 @@ const SlateProvider: FC<PropsWithChildren<SlateProps>> = (props) => {
 
   return (
     <DialogVisibleProvider>
-      <Slate
-        editor={editor}
-        initialValue={initialValue}
-        onChange={onChange}
-      >
+      <Slate editor={editor} initialValue={initialValue} onChange={onChange}>
         {children}
       </Slate>
     </DialogVisibleProvider>

@@ -195,7 +195,10 @@ describe('useRowProps', () => {
 
       const Component: React.FC = () => {
         // Empty row might not exist after optimization, so we handle null
-        const result = useRowProps('empty-row', (row) => row?.cells?.length ?? 0);
+        const result = useRowProps(
+          'empty-row',
+          (row) => row?.cells?.length ?? 0
+        );
         cellCount = result;
         return null;
       };
@@ -268,9 +271,7 @@ describe('useNodeChildrenIds', () => {
                   rows: [
                     {
                       id: 'child-row1',
-                      cells: [
-                        { id: 'child-cell1', plugin: 'test-plugin' },
-                      ],
+                      cells: [{ id: 'child-cell1', plugin: 'test-plugin' }],
                     },
                   ],
                 },
@@ -390,9 +391,7 @@ describe('useNodeHasChildren', () => {
                   rows: [
                     {
                       id: 'child-row',
-                      cells: [
-                        { id: 'child-cell', plugin: 'test-plugin' },
-                      ],
+                      cells: [{ id: 'child-cell', plugin: 'test-plugin' }],
                     },
                   ],
                 },

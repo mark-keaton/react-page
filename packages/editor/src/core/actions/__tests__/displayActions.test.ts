@@ -170,7 +170,9 @@ describe('Display Actions', () => {
     });
 
     it('should have correct SET_DISPLAY_REFERENCE_NODE_ID constant', () => {
-      expect(SET_DISPLAY_REFERENCE_NODE_ID).toBe('SET_DISPLAY_REFERENCE_NODE_ID');
+      expect(SET_DISPLAY_REFERENCE_NODE_ID).toBe(
+        'SET_DISPLAY_REFERENCE_NODE_ID'
+      );
     });
 
     it('should have correct DISPLAY_SET_ZOOM constant', () => {

@@ -2,11 +2,7 @@ import { findNodeInState, currentValue, selectNode } from '../editable';
 import type { RootState } from '../../types/state';
 import type { Value, Cell, Row } from '../../types/node';
 
-const createCell = (
-  id: string,
-  size = 12,
-  rows: Row[] = []
-): Cell => ({
+const createCell = (id: string, size = 12, rows: Row[] = []): Cell => ({
   id,
   size,
   rows,

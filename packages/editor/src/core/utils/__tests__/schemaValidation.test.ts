@@ -14,7 +14,8 @@ type ValidationResult = {
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 function createValidator(schema: Record<string, any>) {
   return (model: unknown): ValidationResult => {
-    const errors: Array<{ path: string; message: string; keyword: string }> = [];
+    const errors: Array<{ path: string; message: string; keyword: string }> =
+      [];
 
     function validateValue(
       value: unknown,

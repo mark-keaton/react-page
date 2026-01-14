@@ -111,7 +111,10 @@ describe('value reducer', () => {
         options
       );
 
-      const actualState = simulateDispatch(initialState, removeCells(['cell1']));
+      const actualState = simulateDispatch(
+        initialState,
+        removeCells(['cell1'])
+      );
       expect(actualState.rows).toEqual([]);
     });
 
@@ -208,7 +211,10 @@ describe('value reducer', () => {
         options
       );
 
-      const actualState = simulateDispatch(initialState, removeCells(['cell1']));
+      const actualState = simulateDispatch(
+        initialState,
+        removeCells(['cell1'])
+      );
       expect(actualState.rows).toHaveLength(1);
       expect(actualState.rows[0].id).toBe('row1');
     });
@@ -240,7 +246,10 @@ describe('value reducer', () => {
         options
       );
 
-      const actualState = simulateDispatch(initialState, resizeCell('cell1')(4));
+      const actualState = simulateDispatch(
+        initialState,
+        resizeCell('cell1')(4)
+      );
       expect(actualState.rows[0].cells[0].size).toBe(4);
       expect(actualState.rows[0].cells[1].size).toBe(8);
     });
@@ -270,7 +279,10 @@ describe('value reducer', () => {
         options
       );
 
-      const actualState = simulateDispatch(initialState, resizeCell('cell1')(1));
+      const actualState = simulateDispatch(
+        initialState,
+        resizeCell('cell1')(1)
+      );
       expect(actualState.rows[0].cells[0].size).toBe(1);
       expect(actualState.rows[0].cells[1].size).toBe(11);
     });
@@ -569,8 +581,7 @@ describe('value reducer', () => {
         updateCellData('nestedCell')({ nested: 'data' }, { lang: 'en' })
       );
       // The parent cell has a plugin so it won't be optimized away
-      const nestedCell =
-        actualState.rows[0].cells[0].rows?.[0]?.cells?.[0];
+      const nestedCell = actualState.rows[0].cells[0].rows?.[0]?.cells?.[0];
       expect(nestedCell?.dataI18n?.en).toEqual({ nested: 'data' });
     });
 

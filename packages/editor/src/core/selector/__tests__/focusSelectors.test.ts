@@ -90,7 +90,10 @@ describe('Focus Selectors', () => {
           },
         ],
       };
-      const state = createState({ nodeIds: ['cell-1', 'cell-nonexistent'] }, value);
+      const state = createState(
+        { nodeIds: ['cell-1', 'cell-nonexistent'] },
+        value
+      );
       const result = allFocusedNodeIds(state);
 
       expect(result).toEqual(['cell-1']);
@@ -121,7 +124,10 @@ describe('Focus Selectors', () => {
           },
         ],
       };
-      const state = createState({ nodeIds: ['nonexistent-1', 'nonexistent-2'] }, value);
+      const state = createState(
+        { nodeIds: ['nonexistent-1', 'nonexistent-2'] },
+        value
+      );
       const result = allFocusedNodeIds(state);
 
       expect(result).toEqual([]);
