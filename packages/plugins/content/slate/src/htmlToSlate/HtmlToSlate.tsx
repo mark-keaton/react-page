@@ -74,7 +74,7 @@ const HtmlToSlate = ({ plugins }: { plugins: SlatePlugin[] }) => {
     const nodes = Array.isArray(fragment) ? fragment : [fragment];
     // filter empty nodes (that contain only text)
     return {
-      slate: nodes.filter((n) => n.text?.trim() !== '' ?? true),
+      slate: nodes.filter((n) => n.text === undefined || n.text?.trim() !== ''),
     };
   };
 };
