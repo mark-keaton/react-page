@@ -1,4 +1,4 @@
-import { Editor, Path, Text, Transforms } from 'slate';
+import { Editor, Element, Path, Text, Transforms } from 'slate';
 import { LI, LISTS_TYPE_PREFIX } from '../../plugins/lists/constants';
 
 /*
@@ -103,7 +103,9 @@ const moveToParent = (
     const onlyTextChildren =
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       ((targetNode?.[0] as any).children as Node[])?.every(
-        (child) => Text.isText(child) || Editor.isInline(editor, child)
+        (child) =>
+          Text.isText(child) ||
+          (Element.isElement(child) && Editor.isInline(editor, child))
       );
     if (onlyTextChildren) {
       Transforms.setNodes(

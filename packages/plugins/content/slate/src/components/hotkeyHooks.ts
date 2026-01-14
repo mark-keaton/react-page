@@ -47,7 +47,7 @@ export const useOnKeyDown = (
 
     if (isHotkey('shift+enter', event)) {
       event.preventDefault();
-      editor.insertText('\n');
+      editor.insertSoftBreak();
       return true;
     }
   }, deps);
