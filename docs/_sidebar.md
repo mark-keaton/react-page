@@ -14,4 +14,6 @@
   - [SSR](/server-side-rendering.md)
   - [Bundle size](/bundle-size.md)
   - [IE11](/ie11.md)
+- Migration
+  - [v5.x to v6.0](/migration/v5-to-v6.md)
 - [CONTRIBUTING](/CONTRIBUTING.md)

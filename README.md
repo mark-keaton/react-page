@@ -17,6 +17,13 @@ ReactPage is a smart, extensible and modern editor ("WYSIWYG") for the web writt
 
 <img width="60%" alt="ReactPage Demo" src="/docs-images/quick-example.gif">
 
+## Requirements
+
+- **React 18.0 or higher** (v6.0+)
+- Node.js 20+ recommended
+
+> **Note**: For React 16/17 support, use ReactPage 5.x
+
 ## Install
 
 `yarn add @react-page/editor`
