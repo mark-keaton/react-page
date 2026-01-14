@@ -1,4 +1,4 @@
-import { render } from 'enzyme';
+import { render } from '@testing-library/react';
 import React from 'react';
 import type { CellPlugin } from '../../core/types';
 import { HTMLRenderer } from '../HTMLRenderer';
@@ -48,13 +48,15 @@ describe('HTMLRenderer', () => {
       },
     ].forEach((c, k) => {
       describe(`case ${k}`, () => {
-        const wrapper = render(
-          <HTMLRenderer value={c} cellPlugins={cellPlugins} />
-        );
         it('should pass', () => {
-          expect(wrapper.html()).toEqual(
+          const { container } = render(
+            <HTMLRenderer value={c} cellPlugins={cellPlugins} />
+          );
+          // HTMLRenderer wraps content in a div, so we check the row structure inside
+          expect(container.firstChild).not.toBeNull();
+          expect((container.firstChild as Element).innerHTML).toEqual(
             // tslint:disable-next-line:max-line-length
-            '<div class="react-page-row"><div class="react-page-cell react-page-cell-sm-12 react-page-cell-xs-12 react-page-cell-leaf"><div class="react-page-cell-inner react-page-cell-inner-leaf some-class"><div style="display:flex;flex-direction:column;height:100%"><p>Hello world</p></div></div></div></div>'
+            '<div class="react-page-row"><div class="react-page-cell react-page-cell-sm-12 react-page-cell-xs-12 react-page-cell-leaf"><div class="react-page-cell-inner react-page-cell-inner-leaf some-class"><div style="display: flex; flex-direction: column; height: 100%;"><p>Hello world</p></div></div></div></div>'
           );
         });
       });
