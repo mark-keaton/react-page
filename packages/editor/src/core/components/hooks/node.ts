@@ -221,9 +221,7 @@ export const useNodeChildrenIds = (nodeId: string) => {
  */
 export const useNodeHasChildren = (nodeId: string) => {
   return useNodeProps(nodeId, (node) =>
-    isRow(node)
-      ? node.cells?.length > 0 ?? false
-      : (node?.rows?.length ?? 0) > 0 ?? false
+    isRow(node) ? (node.cells?.length ?? 0) > 0 : (node?.rows?.length ?? 0) > 0
   );
 };
 /**

@@ -111,8 +111,20 @@ describe('Display Selectors', () => {
   });
 
   describe('all modes are mutually exclusive', () => {
-    const modes: DisplayModes[] = ['preview', 'layout', 'edit', 'insert', 'resizing'];
-    const selectors = [isPreviewMode, isLayoutMode, isEditMode, isInsertMode, isResizeMode];
+    const modes: DisplayModes[] = [
+      'preview',
+      'layout',
+      'edit',
+      'insert',
+      'resizing',
+    ];
+    const selectors = [
+      isPreviewMode,
+      isLayoutMode,
+      isEditMode,
+      isInsertMode,
+      isResizeMode,
+    ];
 
     modes.forEach((mode, modeIndex) => {
       it(`should have exactly one selector return true for ${mode} mode`, () => {

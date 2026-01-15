@@ -146,48 +146,48 @@ export const useRenderLeave = (
       attributes,
       children,
     }: RenderLeafProps) => {
-      // we reduce number of dom elements by avoiding having another span. Its required in edit mode though for slate to work
-      const Wrapper = readOnly ? React.Fragment : 'span';
-      return (
-        <Wrapper {...attributes}>
-          {Object.keys(leaveTypes).reduce((el, type) => {
-            const matchingPlugin = markPlugins.find(
-              (plugin) => plugin.type === type
-            );
-            if (matchingPlugin) {
-              const { Component, getStyle } = matchingPlugin;
-              const dataRaw = leaveTypes[type as keyof typeof leaveTypes]; // usually boolean
-              const data = isObject(dataRaw) ? dataRaw : {};
+      const content = Object.keys(leaveTypes).reduce((el, type) => {
+        const matchingPlugin = markPlugins.find(
+          (plugin) => plugin.type === type
+        );
+        if (matchingPlugin) {
+          const { Component, getStyle } = matchingPlugin;
+          const dataRaw = leaveTypes[type as keyof typeof leaveTypes]; // usually boolean
+          const data = isObject(dataRaw) ? dataRaw : {};
 
-              const style = getStyle ? getStyle(data) : undefined;
-              if (
-                typeof Component === 'string' ||
-                Component instanceof String
-              ) {
-                const nativePropsInData = pickNativeProps(data as Data);
-                return (
-                  <Component {...nativePropsInData} style={style}>
-                    {el}
-                  </Component>
-                );
-              }
-              return (
-                <Component
-                  childNodes={[{ text }]}
-                  getTextContents={() => [text]}
-                  useSelected={injections.useSelected}
-                  useFocused={injections.useFocused}
-                  style={style}
-                  {...data}
-                >
-                  {el}
-                </Component>
-              );
-            }
-            return el;
-          }, children)}
-        </Wrapper>
-      );
+          const style = getStyle ? getStyle(data) : undefined;
+          if (typeof Component === 'string' || Component instanceof String) {
+            const nativePropsInData = pickNativeProps(data as Data);
+            return (
+              <Component {...nativePropsInData} style={style}>
+                {el}
+              </Component>
+            );
+          }
+          return (
+            <Component
+              childNodes={[{ text }]}
+              getTextContents={() => [text]}
+              useSelected={injections.useSelected}
+              useFocused={injections.useFocused}
+              style={style}
+              {...data}
+            >
+              {el}
+            </Component>
+          );
+        }
+        return el;
+      }, children);
+
+      // In read-only mode, we reduce DOM elements by using React.Fragment.
+      // Note: React.Fragment only accepts key and children props, so we can't spread attributes onto it.
+      // In edit mode, we need the span with attributes for slate to work properly.
+      if (readOnly) {
+        return <React.Fragment>{content}</React.Fragment>;
+      }
+
+      return <span {...attributes}>{content}</span>;
     },
     deps
   );

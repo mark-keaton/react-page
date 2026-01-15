@@ -148,9 +148,9 @@ describe('JSON Serialization', () => {
       const result = serialzeValue(nestedValue, cellPlugins);
 
       expect(result.rows[0].cells[0].id).toBe('parent-cell');
-      expect(result.rows[0].cells[0].rows?.[0].cells[0].dataI18n?.en?.text).toBe(
-        'Nested'
-      );
+      expect(
+        result.rows[0].cells[0].rows?.[0].cells[0].dataI18n?.en?.text
+      ).toBe('Nested');
     });
 
     it('serializes cells with multiple languages', () => {
@@ -455,7 +455,9 @@ describe('JSON Serialization', () => {
       expect(deserialized?.rows[0].cells[0].dataI18n?.de?.text).toBe(
         'Hallo Welt'
       );
-      expect(deserialized?.rows[0].cells[1].dataI18n?.en?.src).toBe('image.png');
+      expect(deserialized?.rows[0].cells[1].dataI18n?.en?.src).toBe(
+        'image.png'
+      );
 
       // Verify sizes are preserved
       expect(deserialized?.rows[0].cells[0].size).toBe(8);

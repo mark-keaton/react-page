@@ -64,15 +64,7 @@ const SlateProvider: FC<PropsWithChildren<SlateProps>> = (props) => {
 
   return (
     <DialogVisibleProvider>
-      <Slate
-        editor={editor}
-        value={
-          initialValue /*
-      this is confusingly only for the initial value since slate 0.70something, see https://github.com/ianstormtaylor/slate/issues/4992
-    */
-        }
-        onChange={onChange}
-      >
+      <Slate editor={editor} initialValue={initialValue} onChange={onChange}>
         {children}
       </Slate>
     </DialogVisibleProvider>

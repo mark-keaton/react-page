@@ -179,7 +179,14 @@ describe('Undo/Redo Middleware', () => {
       store.dispatch(
         cellHover(
           { id: 'drag-1' },
-          { id: 'hover-1', ancestorIds: [], levels: null, inline: null, hasInlineNeighbour: null, pluginId: 'test' },
+          {
+            id: 'hover-1',
+            ancestorIds: [],
+            levels: null,
+            inline: null,
+            hasInlineNeighbour: null,
+            pluginId: 'test',
+          },
           0,
           PositionEnum.ABOVE
         )

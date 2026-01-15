@@ -7,7 +7,15 @@ import { initialState } from '../../../reducer';
 import { ReduxProvider } from '../../../reduxConnect';
 import { createValue } from '../../../utils/createValue';
 import { findNodeInState } from '../../../selector/editable';
-import { useRemoveCellById, useUpdateCellData, useFocusCellById, useBlurCell, useBlurAllCells, useResizeCellById, useSetLang } from '../nodeActions';
+import {
+  useRemoveCellById,
+  useUpdateCellData,
+  useFocusCellById,
+  useBlurCell,
+  useBlurAllCells,
+  useResizeCellById,
+  useSetLang,
+} from '../nodeActions';
 import { useUndo, useRedo, useCanUndo, useCanRedo } from '../actions';
 import { useLang } from '../options';
 import EditorStore, { EditorContext } from '../../../EditorStore';
@@ -95,7 +103,8 @@ describe('useRemoveCellById', () => {
   it('does nothing when removing non-existent cell', () => {
     const theState = createTestState();
     const store = createStore(theState);
-    const initialCellCount = store.getState().reactPage.values.present?.rows.length;
+    const initialCellCount =
+      store.getState().reactPage.values.present?.rows.length;
 
     const Component: React.FC = () => {
       const removeCell = useRemoveCellById();
@@ -112,7 +121,9 @@ describe('useRemoveCellById', () => {
     );
 
     // Structure should remain unchanged
-    expect(store.getState().reactPage.values.present?.rows.length).toBe(initialCellCount);
+    expect(store.getState().reactPage.values.present?.rows.length).toBe(
+      initialCellCount
+    );
   });
 });
 

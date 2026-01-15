@@ -17,4 +17,4 @@ examples/build
 # Playwright
 e2e/test-results/
 playwright-report/
-playwright/.cache/
+playwright/.cache/e2e/html-report/
